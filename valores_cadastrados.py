@@ -1,5 +1,4 @@
 def valores_cadastrados():
-  from PyPDF2 import PdfReader
   import sqlite3
   import tkinter as tk
   from tkinter import ttk
@@ -13,7 +12,7 @@ def valores_cadastrados():
   # Criando interface gráfica
   window = tk.Tk()
   window.title("Valores Cadastrados ")
-  window.geometry("570x250")
+  window.geometry("570x350")
   
   # Adicionando texto "Valores cadastrados"
   text_vl_cadastrados = tk.Label(window, text="Valores cadastrados:", font=("Arial", 12))
@@ -52,7 +51,51 @@ def valores_cadastrados():
 
   carregar_button = tk.Button(window, text="Carregar", command=carregar_dados)
   carregar_button.pack()
-  carregar_button.place(x=15, y=220)
+  carregar_button.place(x=15, y=310)
+
+  
+  # Label de status 
+  status_label = tk.Label(window, text="", font=("Arial", 15), fg="red")
+  status_label.pack()
+  status_label.place(x=185, y=250)
+
+  # Criando botão de editar 
+  def editar_tbl():
+    # cria a função de editar
+    pass 
+  editar_tbl_button = tk.Button(window, text="Editar", command=editar_tbl)
+  editar_tbl_button.pack()
+  editar_tbl_button.place(x=15, y=210)
+
+  # Criando botão de excluir
+  def excluir_tbl():
+    # cria a função de excluir
+    pass 
+  excluir_tbl_button = tk.Button(window, text="Excluir", command=excluir_tbl)
+  excluir_tbl_button.pack()
+  excluir_tbl_button.place(x=90, y=210)
+
+  
+  # Botão para gerar relatório
+  def gerar_relatorio():
+    relatorio_financeiro()
+    # Avisa que as informações foram salvas com sucesso 
+    status_label.config(text="Dados salvos com sucesso!")
+    window.after(1000, lambda: status_label.config(text="")) # apaga a mensagem após  1s
+    window.after(1000, lambda: tabela.delete(*tabela.get_children()))
+  
+  gerar_relatorio_button = tk.Button(window,text="Gerar relatório",command=gerar_relatorio)
+  gerar_relatorio_button.pack()
+  gerar_relatorio_button.place(x=100, y=310)
+
+
+  # Criando botão de limpar
+  def limpar_tbl():
+    window.after(1000, lambda: tabela.delete(*tabela.get_children()))
+
+  limpar_tbl_button = tk.Button(window, text="Limpar", command=limpar_tbl)
+  limpar_tbl_button.pack()
+  limpar_tbl_button.place(x=400, y=310)
 
   # Criando botão para fechar janela
   def fechar_janela():
@@ -60,35 +103,7 @@ def valores_cadastrados():
 
   fechar_button = tk.Button(window, text="Fechar", command=fechar_janela)
   fechar_button.pack()
-  fechar_button.place(x=320, y=220)
-
-  # Label de status 
-  status_label = tk.Label(window, text="", font=("Arial", 10), fg="red")
-  status_label.pack()
-  status_label.place(x=300, y=5)
-
- 
-  # Botão para gerar relatório
-  def gerar_relatorio():
-    relatorio_financeiro()
-    # Avisa que as informações foram salvas com sucesso 
-    status_label.config(text="Dados salvos com sucesso!")
-    window.after(1000, lambda: status_label.config(text=""))
-    window.after(1000, lambda: tabela.delete(*tabela.get_children()))
-  
-  gerar_relatorio_button = tk.Button(window,
-                                     text="Gerar relatório",
-                                     command=gerar_relatorio)
-  gerar_relatorio_button.pack()
-  gerar_relatorio_button.place(x=100, y=220)
-
-  
-  def edita_o_pdf():
-    editar_pdf()
-
-  editar_pdf_button = tk.Button(window, text="Editar PDF", command=editar_pdf)
-  editar_pdf_button.pack()
-  editar_pdf_button.place(x=220, y=220)
+  fechar_button.place(x=480, y=310)
 
    
   window.mainloop()
