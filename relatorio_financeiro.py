@@ -4,7 +4,10 @@ def relatorio_financeiro():
   from tkinter import ttk
   from reportlab.pdfgen import canvas
   from reportlab.lib.pagesizes import letter
+  from reportlab.platypus import SimpleDocTemplate, Table
+  from fpdf import FPDF
 
+  
   # Conecta ao banco de dados SQLite
   conn = sqlite3.connect('banco_dados/meu_banco_de_dados.db')
   cursor = conn.cursor()
@@ -55,7 +58,8 @@ def relatorio_financeiro():
     for i, linha in enumerate(dados):
       tipo, nome, descricao, data, valor = linha
       y = height - 100 - (i * 20)
-      c.drawString(100, y,str(tipo)) #  Nome: {nome}, Descricao: {descricao}, Data: {data}, Valor: {valor}")
+      #  Nome: {nome}, Descricao: {descricao}, Data: {data}, Valor: {valor}")
+      c.drawString(100, y,str(tipo)) 
       c.drawString(160, y,str(nome))
       c.drawString(220, y,str(descricao))
       c.drawString(400, y,str(data))
@@ -64,17 +68,20 @@ def relatorio_financeiro():
     
     # Adiciona o total 20 unidades abaixo do último dado inserido
     y = y - 30
-    c.drawString(400, y, "Total= R$ ")
-    c.drawString(455, y, str(soma_valores()))
+    c.drawString(100, y, "Total= R$ ")
+    c.drawString(155, y, str(soma_valores()))
 
     # Adicionando o resultado da soma dos valores a pagar
-    c.drawString(400, y - 30, "Total a pagar= R$ ")
-    c.drawString(500, y - 30, str(soma_valores_a_pagar()))
+    c.drawString(200, y, "Total a pagar= R$ ")
+    c.drawString(300, y, str(soma_valores_a_pagar()))
 
     # Adicionando o resultado da soma dos valores a receber
-    c.drawString(400, y - 60, "Total a receber= R$ ")
-    c.drawString(510, y - 60, str(soma_valores_a_receber()))
-    
+    c.drawString(350, y, "Total a receber= R$ ")
+    c.drawString(450, y, str(soma_valores_a_receber()))
+
+
+
+       
     
     c.save()
 
